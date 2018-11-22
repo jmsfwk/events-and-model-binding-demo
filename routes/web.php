@@ -11,6 +11,20 @@
 |
 */
 
+use App\Cat;
+
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::get('/cats', function () {
+    return \App\Cat::all();
+});
+
+Route::get('/cats/bad/{cat}', function ($cat) {
+    dd($cat);
+});
+
+Route::get('/cats/good/{cat}', function (Cat $cat) {
+    dd($cat);
 });
