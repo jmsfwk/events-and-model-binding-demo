@@ -12,6 +12,7 @@
 */
 
 use App\Cat;
+use Illuminate\Http\Request;
 
 Route::get('/', function () {
     return view('welcome');
@@ -19,6 +20,20 @@ Route::get('/', function () {
 
 Route::get('/cats', function () {
     return \App\Cat::all();
+});
+
+Route::get('/cats/new', function () {
+    return view('new');
+});
+
+Route::post('/cats', function (Request $request) {
+    $cat = Cat::create($request->all());
+
+    if ($request->fluffyness > 4) {
+        event(new \App\Events\SuperFluffyCatCreated($cat));
+    }
+
+    return redirect('/cats');
 });
 
 Route::get('/cats/bad/{cat}', function ($cat) {
